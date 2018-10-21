@@ -194,11 +194,13 @@
 
     function doApplyEdits() {
    
+	var name = prompt("Enter name of place: ");
+	var description = prompt("Description: ");
     //add the attributes for the layer 
     myPointGraphic.attributes = {};
-    myPointGraphic.attributes["Name"] = "test point";
-    myPointGraphic.attributes["Place"] = " a place";
-    myPointGraphic.attributes["category"] = "History"
+    myPointGraphic.attributes["Name"] = name;
+    myPointGraphic.attributes["Description"] = description;
+    
    
     //the edits to add to arcgis
     const edits = {
