@@ -103,12 +103,14 @@ Map, MapView, Graphic, ScreenPoint, WebMap, FeatureLayer
 		//basemap: "streets"
 		//basemap: "satellite",
 		basemap: "hybrid",
+          layers: [featureLayer],
 		 });
       var view = new MapView({
         center: [document.getElementById("long").innerHTML-.003, document.getElementById("lat").innerHTML-.003],
         container: "viewDiv",
         map: webmap,
-        zoom: 20
+          
+        zoom: 15
       });
       
       
