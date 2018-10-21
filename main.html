@@ -155,7 +155,10 @@
           view.popup.open({
             title: "New Tour Point",
             location: event.mapPoint,
-            content: "<input type='file' name='myFile'>"
+            content: 
+              "Name of location: " + "<input id='nameLoc' type='text' name='name'><br>" +
+              "Desc of location: " + "<input id='descLoc' type='text' name='desc'><br>" +
+              "Upload you Audio track: <input type='file' name='myFile'>"
           })
 
           // view.popup.content = "No address was found for this location";
@@ -205,6 +208,12 @@
     }
 
     function doApplyEdits() {
+
+      var name = document.getElementById("nameLoc").value
+      var desc = document.getElementById("descLoc").value
+
+      console.log("name = " + name)
+      console.log("desc = " + desc)
    
     //add the attributes for the layer 
     myPointGraphic.attributes = {};
@@ -261,8 +270,8 @@ echo "</li><br>";
 ?>
 </ul>
 -->
-  <p id="lat" />
-  <p id="long" />
+  <p id="lat" ></p>
+  <p id="long" ></p>
 
   <div id="viewDiv"></div>
   <style>
