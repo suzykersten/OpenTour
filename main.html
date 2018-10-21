@@ -85,8 +85,9 @@
       }
     };
 
-    var myPointGraphic = null
-      
+    var myPointGraphic = null;
+    var featureLayer = null; 
+    
     var browserGeolocationSuccess = function (position) {
       //alert("Browser geolocation success!\n\nlat = " + position.coords.latitude + "\nlng = " + position.coords.longitude);
       document.getElementById("lat").innerHTML = position.coords.latitude;
@@ -107,6 +108,13 @@
         
         var myLocationGraphic = null;
 
+          featureLayer = new FeatureLayer({
+        url: "https://services9.arcgis.com/DrFHdd8rybAyRkln/arcgis/rest/services/audiodrops/FeatureServer",
+        outFields: ["*"],
+        popupEnabled: true,
+        id: "tourlayer"
+      });
+          
         var webmap = new WebMap({
           //basemap: 'topo',
           //basemap: "streets"
