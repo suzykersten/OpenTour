@@ -88,8 +88,8 @@
 
     var browserGeolocationSuccess = function (position) {
       //alert("Browser geolocation success!\n\nlat = " + position.coords.latitude + "\nlng = " + position.coords.longitude);
-      document.getElementById("lat").innerHTML = 33.7769//position.coords.latitude;
-      document.getElementById("long").innerHTML = -84.3960493//position.coords.longitude;
+      document.getElementById("lat").innerHTML = position.coords.latitude;
+      document.getElementById("long").innerHTML = position.coords.longitude;
 
       require([
         "esri/Map",
