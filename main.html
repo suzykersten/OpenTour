@@ -136,9 +136,9 @@
             "lat").innerHTML)],
           container: "viewDiv",
           map: webmap,
-          zoom: 18
-        });
+          zoom: 18,
 
+<<<<<<< HEAD
         view.on('pointer-move', function (evt) {
           view.hitTest(evt).then(function (r) {
             console.log('evt.mapPoint = ' + JSON.stringify(evt.mapPoint, null, 2))
@@ -157,21 +157,33 @@
               });
             }
           });
+=======
+>>>>>>> dc5a2fbb9a70897d5f27ff629c00ed286c0a8e1d
         });
 
+ view.on('pointer-move', function(evt) {
+ 	view.hitTest(evt).then(function(r) {
+    if(r.results.length > 0 && r.results[0].graphic) {
+		
+      var feature = r.results[0].graphic;
+      console.log('feature', feature.attributes);
+		    view.popup.open({
+            title: "Tour Point",
+            location: evt.mapPoint,
+            content: 
+              "Name: " + feature.attributes["name"]+
+              "<br>Desc: " + feature.attributes["Description"]
+          });    
+}
+  });
+ });
+ 
         view.on("click", (event) => {
           event.stopPropagation(); // overwrite default click-for-popup behavior
           if (myPointGraphic != null) {
             console.log('removing')
             view.graphics.remove(myPointGraphic)
           }
-          // console.log('Harrison Welch')
-          // console.log("mapPoint = " + JSON.stringify(event.mapPoint, null, 2))
-          // console.log("map x map y = " + event.mapPoint.latitude + " y: " + event.mapPoint.longitude);
-          // console.log("x = " + JSON.stringify(event.x, null, 2))
-          // console.log("y = " + JSON.stringify(event.y, null, 2))
-          // console.log("event = " + JSON.stringify(event, null, 2))
-
           var point = {
             type: "point", // autocasts as new Point()
             longitude: event.mapPoint.longitude,
