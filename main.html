@@ -85,7 +85,8 @@
       }
     };
 
-
+    var myPointGraphic = null
+      
     var browserGeolocationSuccess = function (position) {
       //alert("Browser geolocation success!\n\nlat = " + position.coords.latitude + "\nlng = " + position.coords.longitude);
       document.getElementById("lat").innerHTML = position.coords.latitude;
@@ -96,13 +97,14 @@
         "esri/views/MapView",
         "esri/Graphic",
         "esri/geometry/ScreenPoint",
-        "esri/WebMap"
+        "esri/WebMap",
+     "esri/layers/FeatureLayer"
       ], function (
-        Map, MapView, Graphic, ScreenPoint, WebMap
+        Map, MapView, Graphic, ScreenPoint, WebMap, FeatureLayer
       ) {
 
         // var myPoint = null
-        var myPointGraphic = null
+        
         var myLocationGraphic = null;
 
         var webmap = new WebMap({
@@ -110,6 +112,7 @@
           //basemap: "streets"
           //basemap: "satellite",
           basemap: "hybrid",
+          layers: [featureLayer]
         });
         var view = new MapView({
           center: [parseFloat(document.getElementById("long").innerHTML) + 0.004, parseFloat(document.getElementById(
@@ -181,6 +184,41 @@
 
     }
 
+    function doApplyEdits() {
+  
+    
+    //add the attributes for the layer 
+    myPointGraphic.attributes = {};
+    myPointGraphic.attributes["Name"] = "test point";
+    myPointGraphic.attributes["Place"] = " a place";
+    myPointGraphic.attributes["category"] = "History"
+   
+    //the edits to add to arcgis
+    const edits = {
+              addFeatures: [myPointGraphic]
+            };
+            
+    featureLayer.applyEdits(edits).then(function(editsResult) {
+      
+        console.log("edits result: ");
+      console.log(editsResult);
+    // Get the objectId of the newly added feature.
+    // Call selectFeature function to highlight the new feature.
+    if (editsResult.addFeatureResults.length > 0) {
+      const objectId = editsResult.addFeatureResults[0].objectId;
+    }
+  })
+    
+    
+    
+  .catch(function(error) {
+    console.log("===============================================");
+    console.error("[ applyEdits ] FAILURE: ", error.code, error.name,
+      error.message);
+    console.log("error = ", error);
+  });
+}
+    
     tryGeolocation();
 
     //map.basemap="topo";
