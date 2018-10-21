@@ -251,9 +251,9 @@ echo "</li><br>";
 -->
   <p id="lat" />
   <p id="long" />
-  <div id="viewDiv"></div>
 
-  <style>
+  <div id="viewDiv"></div>
+<style>
     .esri-view-surface {
       width: 66% !important;
       height: 75% !important;
@@ -263,10 +263,47 @@ echo "</li><br>";
 
     .esri-view .esri-view-root {
       margin-left: 28%;
-    }
-  </style>
-<input type="button" onclick="doApplyedits();"/>
 
+    }
+
+	.esri-attribution__sources{
+		visibility:hidden;
+	}
+	.esri-attribution__powered-by{
+		visibility:hidden;	
+	}
+	
+	#viewDiv{
+		margin-bottom:-150px;
+	}
+
+	#attr{
+		//margin-left:28%;
+		margin-bottom:0;
+		float:left;
+	}
+
+	#powered{
+		margin-left:28%;
+	}
+
+	input{
+			margin-left:28%;
+	}
+	#contain{
+		width:66%;
+		margin-left:28%;
+		font-size:100%;
+	}
+ </style>
+<input type="button" onclick="doApplyEdits();" value="Submit"/>
+
+<div id="contain">
+<br>  
+<p id="attr">
+USDA FSA, DigitalGlobe | Esri, HERE, Garmin, iPC
+<br>Powered by Esri
+</p>
 </body>
 
 </html>
