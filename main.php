@@ -182,7 +182,7 @@ console.log(myPointGraphic);
 
      
      
-     
+// THIS IS THE FUNCTION THAT NEEDS TO BE BOUND TO A FUNCTION THING -----------------------------------------------------------------------------------------------------
 // Call FeatureLayer.applyEdits() with specified params.
 function doApplyEdits() {
   
