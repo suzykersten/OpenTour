@@ -110,19 +110,17 @@
         
         var myLocationGraphic = null;
 
-          featureLayer = new FeatureLayer({
-        url: "https://services9.arcgis.com/DrFHdd8rybAyRkln/arcgis/rest/services/audiodrops/FeatureServer",
-        outFields: ["*"],
-        popupEnabled: true,
-        id: "tourlayer"
-      });
+        featureLayer = new FeatureLayer({
+          url: "https://services9.arcgis.com/DrFHdd8rybAyRkln/arcgis/rest/services/audiodrops/FeatureServer",
+          outFields: ["*"],
+          popupEnabled: true,
+          id: "tourlayer"
+        });
 
-        
         featureLayer.popupTemplate = {
           content: [{
             type: "text",
-            text: "The {expression/predominance-tree} species occurs more often"
-              + " than other tree species in the area."
+            text: "HELLO, WORLD!"
           }]
         };
           
@@ -140,7 +138,20 @@
           map: webmap,
           zoom: 17
         });
+        
+        view.on("pointer-move", eventHandler);
+        view.on("pointer-down", eventHandler);
 
+        eventHandler(event) {
+          // the hitTest() checks to see if any graphics in the view
+          // intersect the given screen x, y coordinates
+          view.hitTest(event)
+            .then(getGraphics);
+        }
+
+        function getGraphics(response) {
+          console.log('getGraphics(response); res = ' + response)
+        }
 
         view.on("click", (event) => {
           event.stopPropagation(); // overwrite default click-for-popup behavior
