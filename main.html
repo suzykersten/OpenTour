@@ -86,8 +86,8 @@
     };
 
     var myPointGraphic = null;
-    var featureLayer = null; 
-    
+    var featureLayer = null;
+
     var browserGeolocationSuccess = function (position) {
       //alert("Browser geolocation success!\n\nlat = " + position.coords.latitude + "\nlng = " + position.coords.longitude);
       document.getElementById("lat").innerHTML = position.coords.latitude;
@@ -107,7 +107,7 @@
       ) {
 
         // var myPoint = null
-        
+
         var myLocationGraphic = null;
 
         featureLayer = new FeatureLayer({
@@ -123,7 +123,7 @@
             text: "HELLO, WORLD!"
           }]
         };
-          
+
         var webmap = new WebMap({
           //basemap: 'topo',
           //basemap: "streets"
@@ -132,26 +132,31 @@
           layers: [featureLayer]
         });
         var view = new MapView({
-          center: [parseFloat(document.getElementById("long").innerHTML) + 0.004, parseFloat(document.getElementById(
-            "lat").innerHTML) - 0.0013],
+          center: [parseFloat(document.getElementById("long").innerHTML), parseFloat(document.getElementById(
+            "lat").innerHTML)],
           container: "viewDiv",
           map: webmap,
-          zoom: 17
+          zoom: 18
         });
-        
-        view.on("pointer-move", eventHandler);
-        view.on("pointer-down", eventHandler);
 
-        eventHandler(event) {
-          // the hitTest() checks to see if any graphics in the view
-          // intersect the given screen x, y coordinates
-          view.hitTest(event)
-            .then(getGraphics);
-        }
+        view.on('pointer-move', function (evt) {
+          view.hitTest(evt).then(function (r) {
+            if (r.results.length > 0 && r.results[0].graphic) {
 
-        function getGraphics(response) {
-          console.log('getGraphics(response); res = ' + response)
-        }
+              var feature = r.results[0].graphic;
+              // console.log('feature', feature.attributes);
+
+              view.popup.open({
+                title: "New Tour Point",
+                location: evt.mapPoint,
+                content: "Name of location: " + feature.attributes["Name"] +
+                  "Desc of location: " + "<input id='descLoc' type='text' name='desc'><br>" +
+                  "Upload your Audio track: " + "<input type='file' name='myFile'><br>" +
+                  "<input type='button'	id='sub' value='Submit' onclick='doApplyEdits();'>"
+              });
+            }
+          });
+        });
 
         view.on("click", (event) => {
           event.stopPropagation(); // overwrite default click-for-popup behavior
@@ -175,12 +180,11 @@
           view.popup.open({
             title: "New Tour Point",
             location: event.mapPoint,
-            content: 
-              "Name of location: " + "<input id='nameLoc' type='text' name='name'><br>" +
+            content: "Name of location: " + "<input id='nameLoc' type='text' name='name'><br>" +
               "Desc of location: " + "<input id='descLoc' type='text' name='desc'><br>" +
-              "Upload your Audio track: "+"<input type='file' name='myFile'><br>"+
-			  "<input type='button'	value='Submit' onclick='doApplyEdits();'>"
-          })
+              "Upload your Audio track: " + "<input type='file' name='myFile'><br>" +
+              "<input type='button'	id='sub' value='Submit' onclick='doApplyEdits();'>"
+          });
 
           // view.popup.content = "No address was found for this location";
 
@@ -229,40 +233,40 @@
     }
 
     function doApplyEdits() {
-	var name = document.getElementById("nameLoc").value;
+      var name = document.getElementById("nameLoc").value;
 
-	var description = document.getElementById("descLoc").value;
-		
-    //add the attributes for the layer 
-    myPointGraphic.attributes = {};
-    myPointGraphic.attributes["Name"] = name;
-    myPointGraphic.attributes["Description"] = description;
-    
-   
-    //the edits to add to arcgis
-    const edits = {
-              addFeatures: [myPointGraphic]
-            };
-            
-    featureLayer.applyEdits(edits).then(function(editsResult) {
-      
-        console.log("edits result: ");
-      console.log(editsResult);
-    // Get the objectId of the newly added feature.
-    // Call selectFeature function to highlight the new feature.
-    if (editsResult.addFeatureResults.length > 0) {
-      const objectId = editsResult.addFeatureResults[0].objectId;
+      var description = document.getElementById("descLoc").value;
+      document.getElementById("sub").value = "Submitted";
+      //add the attributes for the layer 
+      myPointGraphic.attributes = {};
+      myPointGraphic.attributes["Name"] = name;
+      myPointGraphic.attributes["Description"] = description;
+
+
+      //the edits to add to arcgis
+      const edits = {
+        addFeatures: [myPointGraphic]
+      };
+
+      featureLayer.applyEdits(edits).then(function (editsResult) {
+
+          console.log("edits result: ");
+          console.log(editsResult);
+          // Get the objectId of the newly added feature.
+          // Call selectFeature function to highlight the new feature.
+          if (editsResult.addFeatureResults.length > 0) {
+            const objectId = editsResult.addFeatureResults[0].objectId;
+          }
+        })
+
+        .catch(function (error) {
+          console.log("===============================================");
+          console.error("[ applyEdits ] FAILURE: ", error.code, error.name,
+            error.message);
+          console.log("error = ", error);
+        });
     }
-  })
-    
-  .catch(function(error) {
-    console.log("===============================================");
-    console.error("[ applyEdits ] FAILURE: ", error.code, error.name,
-      error.message);
-    console.log("error = ", error);
-  });
-}
-    
+
     tryGeolocation();
 
     //map.basemap="topo";
@@ -288,12 +292,12 @@ echo "</li><br>";
 ?>
 </ul>
 -->
-  <p id="lat" ></p>
-  <p id="long" ></p>
+  <p id="lat"></p>
+  <p id="long"></p>
 
   <div id="viewDiv"></div>
   <style>
-    .esri-view-surface {
+    /*   .esri-view-surface {
       width: 66% !important;
       height: 75% !important;
       display: block;
@@ -311,37 +315,31 @@ echo "</li><br>";
 	.esri-attribution__powered-by{
 		visibility:hidden;	
 	}
-	
-	#viewDiv{
-		margin-bottom:-150px;
-	}
+	*/
+    #viewDiv {
+      margin-bottom: -150px;
+    }
 
-	#attr{
-		//margin-left:28%;
-		margin-bottom:0;
-		float:left;
-	}
+    #attr {
+      //margin-left:28%;
+      margin-bottom: 0;
+      float: left;
+    }
 
-	#powered{
-		margin-left:28%;
-	}
+    #powered {
+      margin-left: 28%;
+    }
 
-	input{
-			margin-left:28%;
-	}
-	#contain{
-		width:66%;
-		margin-left:28%;
-		font-size:100%;
-	}
- </style>
-  
-  <div id="contain">
-    <br>
-    <p id="attr">
-      USDA FSA, DigitalGlobe | Esri, HERE, Garmin, iPC
-      <br>Powered by Esri
-    </p>
+    input {
+      margin-left: 28%;
+    }
+
+    #contain {
+      width: 66%;
+      margin-left: 28%;
+      font-size: 100%;
+    }
+  </style>
 </body>
 
 </html>
