@@ -99,9 +99,11 @@
         "esri/Graphic",
         "esri/geometry/ScreenPoint",
         "esri/WebMap",
-     "esri/layers/FeatureLayer"
+        "esri/layers/FeatureLayer",
+        "esri/widgets/Popup",
+        "esri/PopupTemplate"
       ], function (
-        Map, MapView, Graphic, ScreenPoint, WebMap, FeatureLayer
+        Map, MapView, Graphic, ScreenPoint, WebMap, FeatureLayer, Popup, PopupTemplate
       ) {
 
         // var myPoint = null
@@ -132,6 +134,7 @@
 
 
         view.on("click", (event) => {
+          event.stopPropagation(); // overwrite default click-for-popup behavior
           if (myPointGraphic != null) {
             console.log('removing')
             view.graphics.remove(myPointGraphic)
@@ -148,6 +151,15 @@
             longitude: event.mapPoint.longitude,
             latitude: event.mapPoint.latitude
           };
+
+          view.popup.open({
+            title: "New Tour Point",
+            location: event.mapPoint,
+            content: "<input type='file' name='myFile'>"
+          })
+
+          // view.popup.content = "No address was found for this location";
+
           // Create a symbol for drawing the point
           var markerSymbol = {
             type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
@@ -253,7 +265,7 @@ echo "</li><br>";
   <p id="long" />
 
   <div id="viewDiv"></div>
-<style>
+  <style>
     .esri-view-surface {
       width: 66% !important;
       height: 75% !important;
@@ -296,14 +308,14 @@ echo "</li><br>";
 		font-size:100%;
 	}
  </style>
-<input type="button" onclick="doApplyEdits();" value="Submit"/>
+  <input type="button" onclick="doApplyEdits();" value="Submit" />
 
-<div id="contain">
-<br>  
-<p id="attr">
-USDA FSA, DigitalGlobe | Esri, HERE, Garmin, iPC
-<br>Powered by Esri
-</p>
+  <div id="contain">
+    <br>
+    <p id="attr">
+      USDA FSA, DigitalGlobe | Esri, HERE, Garmin, iPC
+      <br>Powered by Esri
+    </p>
 </body>
 
 </html>
