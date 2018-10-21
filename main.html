@@ -138,7 +138,8 @@
             "lat").innerHTML)],
           container: "viewDiv",
           map: webmap,
-          zoom: 18
+          zoom: 18,
+
         });
 
  view.on('pointer-move', function(evt) {
@@ -146,16 +147,13 @@
     if(r.results.length > 0 && r.results[0].graphic) {
 		
       var feature = r.results[0].graphic;
-      // console.log('feature', feature.attributes);
-
-          view.popup.open({
-            title: "New Tour Point",
+      console.log('feature', feature.attributes);
+		    view.popup.open({
+            title: "Tour Point",
             location: evt.mapPoint,
             content: 
-              "Name of location: " + feature.attributes["Name"]+
-              "Desc of location: " + "<input id='descLoc' type='text' name='desc'><br>" +
-              "Upload your Audio track: "+"<input type='file' name='myFile'><br>"+
-			  "<input type='button'	id='sub' value='Submit' onclick='doApplyEdits();'>"
+              "Name: " + feature.attributes["name"]+
+              "<br>Desc: " + feature.attributes["Description"]
           });    
 }
   });
@@ -167,13 +165,6 @@
             console.log('removing')
             view.graphics.remove(myPointGraphic)
           }
-          // console.log('Harrison Welch')
-          // console.log("mapPoint = " + JSON.stringify(event.mapPoint, null, 2))
-          // console.log("map x map y = " + event.mapPoint.latitude + " y: " + event.mapPoint.longitude);
-          // console.log("x = " + JSON.stringify(event.x, null, 2))
-          // console.log("y = " + JSON.stringify(event.y, null, 2))
-          // console.log("event = " + JSON.stringify(event, null, 2))
-
           var point = {
             type: "point", // autocasts as new Point()
             longitude: event.mapPoint.longitude,
