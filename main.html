@@ -116,6 +116,15 @@
         popupEnabled: true,
         id: "tourlayer"
       });
+
+        
+        featureLayer.popupTemplate = {
+          content: [{
+            type: "text",
+            text: "The {expression/predominance-tree} species occurs more often"
+              + " than other tree species in the area."
+          }]
+        };
           
         var webmap = new WebMap({
           //basemap: 'topo',
