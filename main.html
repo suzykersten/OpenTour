@@ -140,6 +140,27 @@
           map: webmap,
           zoom: 18
         });
+
+ view.on('pointer-move', function(evt) {
+ 	view.hitTest(evt).then(function(r) {
+    if(r.results.length > 0 && r.results[0].graphic) {
+		
+      var feature = r.results[0].graphic;
+      // console.log('feature', feature.attributes);
+
+          view.popup.open({
+            title: "New Tour Point",
+            location: evt.mapPoint,
+            content: 
+              "Name of location: " + feature.attributes["Name"]+
+              "Desc of location: " + "<input id='descLoc' type='text' name='desc'><br>" +
+              "Upload your Audio track: "+"<input type='file' name='myFile'><br>"+
+			  "<input type='button'	id='sub' value='Submit' onclick='doApplyEdits();'>"
+          });    
+}
+  });
+ });
+ 
         view.on("click", (event) => {
           event.stopPropagation(); // overwrite default click-for-popup behavior
           if (myPointGraphic != null) {
@@ -167,7 +188,7 @@
               "Desc of location: " + "<input id='descLoc' type='text' name='desc'><br>" +
               "Upload your Audio track: "+"<input type='file' name='myFile'><br>"+
 			  "<input type='button'	id='sub' value='Submit' onclick='doApplyEdits();'>"
-          })
+          });
 
           // view.popup.content = "No address was found for this location";
 
