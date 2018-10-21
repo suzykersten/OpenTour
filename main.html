@@ -141,6 +141,7 @@
 
         view.on('pointer-move', function (evt) {
           view.hitTest(evt).then(function (r) {
+            console.log('evt.mapPoint = ' + JSON.stringify(evt.mapPoint, null, 2))
             if (r.results.length > 0 && r.results[0].graphic) {
 
               var feature = r.results[0].graphic;
