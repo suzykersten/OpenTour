@@ -158,7 +158,8 @@
             content: 
               "Name of location: " + "<input id='nameLoc' type='text' name='name'><br>" +
               "Desc of location: " + "<input id='descLoc' type='text' name='desc'><br>" +
-              "Upload you Audio track: <input type='file' name='myFile'>"
+              "Upload your Audio track: "+"<input type='file' name='myFile'><br>"+
+			  "<input type='button'	value='Submit' onclick='doApplyEdits();'>"
           })
 
           // view.popup.content = "No address was found for this location";
@@ -208,15 +209,10 @@
     }
 
     function doApplyEdits() {
+	var name = document.getElementById("nameLoc").value;
 
-      var name = document.getElementById("nameLoc").value
-      var desc = document.getElementById("descLoc").value
-
-      console.log("name = " + name)
-      console.log("desc = " + desc)
-   
-	var name = prompt("Enter name of place: ");
-	var description = prompt("Description: ");
+	var description = document.getElementById("descLoc").value;
+		
     //add the attributes for the layer 
     myPointGraphic.attributes = {};
     myPointGraphic.attributes["Name"] = name;
@@ -319,8 +315,7 @@ echo "</li><br>";
 		font-size:100%;
 	}
  </style>
-  <input type="button" onclick="doApplyEdits();" value="Submit" />
-
+  
   <div id="contain">
     <br>
     <p id="attr">
