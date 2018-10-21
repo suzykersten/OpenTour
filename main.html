@@ -125,14 +125,12 @@
           layers: [featureLayer]
         });
         var view = new MapView({
-          center: [parseFloat(document.getElementById("long").innerHTML) + 0.004, parseFloat(document.getElementById(
-            "lat").innerHTML) - 0.0013],
+          center: [parseFloat(document.getElementById("long").innerHTML), parseFloat(document.getElementById(
+            "lat").innerHTML)],
           container: "viewDiv",
           map: webmap,
-          zoom: 17
+          zoom: 18
         });
-
-
         view.on("click", (event) => {
           event.stopPropagation(); // overwrite default click-for-popup behavior
           if (myPointGraphic != null) {
@@ -159,7 +157,7 @@
               "Name of location: " + "<input id='nameLoc' type='text' name='name'><br>" +
               "Desc of location: " + "<input id='descLoc' type='text' name='desc'><br>" +
               "Upload your Audio track: "+"<input type='file' name='myFile'><br>"+
-			  "<input type='button'	value='Submit' onclick='doApplyEdits();'>"
+			  "<input type='button'	id='sub' value='Submit' onclick='doApplyEdits();'>"
           })
 
           // view.popup.content = "No address was found for this location";
@@ -212,7 +210,7 @@
 	var name = document.getElementById("nameLoc").value;
 
 	var description = document.getElementById("descLoc").value;
-		
+	document.getElementById("sub").value="Submitted";	
     //add the attributes for the layer 
     myPointGraphic.attributes = {};
     myPointGraphic.attributes["Name"] = name;
@@ -273,7 +271,7 @@ echo "</li><br>";
 
   <div id="viewDiv"></div>
   <style>
-    .esri-view-surface {
+/*   .esri-view-surface {
       width: 66% !important;
       height: 75% !important;
       display: block;
@@ -291,7 +289,7 @@ echo "</li><br>";
 	.esri-attribution__powered-by{
 		visibility:hidden;	
 	}
-	
+	*/
 	#viewDiv{
 		margin-bottom:-150px;
 	}
@@ -315,13 +313,6 @@ echo "</li><br>";
 		font-size:100%;
 	}
  </style>
-  
-  <div id="contain">
-    <br>
-    <p id="attr">
-      USDA FSA, DigitalGlobe | Esri, HERE, Garmin, iPC
-      <br>Powered by Esri
-    </p>
-</body>
+  </body>
 
 </html>
