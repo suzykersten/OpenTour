@@ -193,8 +193,7 @@
     }
 
     function doApplyEdits() {
-  
-    
+   
     //add the attributes for the layer 
     myPointGraphic.attributes = {};
     myPointGraphic.attributes["Name"] = "test point";
@@ -216,8 +215,6 @@
       const objectId = editsResult.addFeatureResults[0].objectId;
     }
   })
-    
-    
     
   .catch(function(error) {
     console.log("===============================================");
@@ -268,6 +265,8 @@ echo "</li><br>";
       margin-left: 28%;
     }
   </style>
+<input type="button" onclick="doApplyedits();"/>
+
 </body>
 
 </html>
