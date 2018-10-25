@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-  <title>Intro to graphics - 4.9</title>
+  <title>OpenTour</title>
 
   <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
   <script src="https://js.arcgis.com/4.9/"></script>
@@ -138,27 +138,6 @@
           map: webmap,
           zoom: 18,
 
-<<<<<<< HEAD
-        view.on('pointer-move', function (evt) {
-          view.hitTest(evt).then(function (r) {
-            console.log('evt.mapPoint = ' + JSON.stringify(evt.mapPoint, null, 2))
-            if (r.results.length > 0 && r.results[0].graphic) {
-
-              var feature = r.results[0].graphic;
-              // console.log('feature', feature.attributes);
-
-              view.popup.open({
-                title: "New Tour Point",
-                location: evt.mapPoint,
-                content: "Name of location: " + feature.attributes["Name"] +
-                  "Desc of location: " + "<input id='descLoc' type='text' name='desc'><br>" +
-                  "Upload your Audio track: " + "<input type='file' name='myFile'><br>" +
-                  "<input type='button'	id='sub' value='Submit' onclick='doApplyEdits();'>"
-              });
-            }
-          });
-=======
->>>>>>> dc5a2fbb9a70897d5f27ff629c00ed286c0a8e1d
         });
 
  view.on('pointer-move', function(evt) {
